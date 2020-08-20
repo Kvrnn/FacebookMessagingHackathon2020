@@ -1,21 +1,19 @@
-/**
- * DO NOT EDIT THESE CONST
- * They are required dependencies
- */
-                  require('dotenv').config()
-const express   = require('express');
-const cors      = require('cors');
+require('dotenv').config()
+const // Declare dependencies here
+    express     = require('express'),
+    bodyParser  = require('body-parser'),
+    cors        = require('cors'),
+    appport     = process.env.PORT || 3000,
+    app         = express().use( // Declare middleware here
+                                bodyParser.json(),
+                                cors(),
+                                express.json(),
+                                );
 
-// Opening the App and setting the port.
-const app = express();
-const appport = process.env.PORT || 3000
+const
+    hookRouter = require('./api/hook')
 
-app.use(cors());
-app.use(express.json());
-
-const mainRouter = require('./pages/index')
-
-app.use('/', mainRouter) // Index
+app.use('/inbound', hookRouter)
 
 app.listen(appport, function(err) {
     if(err){throw new Error(err)}

@@ -18,5 +18,6 @@ const mainRouter = require('./pages/index')
 app.use('/', mainRouter) // Index
 
 app.listen(appport, function(err) {
+    if(err){throw new Error(err)}
     console.log(`Server is running on port: ${appport}`);
 });

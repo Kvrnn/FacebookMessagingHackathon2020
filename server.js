@@ -23,8 +23,8 @@ client.message('what is the weather in London?', {})
     })
     .catch(console.error);
 
-const {interactive} = require('node-wit');
-interactive(client);
+// const {interactive} = require('node-wit');
+// interactive(client);
 
 app.use('/inbound', hookRouter)
 

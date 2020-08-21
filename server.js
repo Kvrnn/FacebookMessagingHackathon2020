@@ -13,6 +13,19 @@ const // Declare dependencies here
 const
     hookRouter = require('./api/hook')
 
+const Wit = require("node-wit/lib/wit");
+
+
+const client = new Wit({accessToken: process.env.WIT_SERVER_ACCESS_TOKEN});
+client.message('what is the weather in London?', {})
+    .then((data) => {
+        console.log('Yay, got Wit.ai response: ' + JSON.stringify(data));
+    })
+    .catch(console.error);
+
+const {interactive} = require('node-wit');
+interactive(client);
+
 app.use('/inbound', hookRouter)
 
 app.listen(appport, function(err) {

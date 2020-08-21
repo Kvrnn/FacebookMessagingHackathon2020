@@ -26,7 +26,7 @@ router.route('/').all(async(req, res) => {
             break
         case 'GET':
             // Your verify token. Should be a random string.
-            let VERIFY_TOKEN = "1234"
+            let VERIFY_TOKEN = process.env.BLOWFISH_HASH_HOOK_VERIFY_TOKEN
 
             // Parse the query params
             let mode = req.query['hub.mode'];

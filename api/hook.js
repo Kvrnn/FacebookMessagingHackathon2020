@@ -1,7 +1,6 @@
 const
     router   = require('express').Router(),
-    Wit = require("node-wit/lib/wit"),
-    client = new Wit({accessToken: process.env.WIT_SERVER_ACCESS_TOKEN})
+    functions = require('./utils/functions')
 
 router.route('/').all(async(req, res) => {
     switch(req.method){
@@ -17,21 +16,21 @@ router.route('/').all(async(req, res) => {
                     // Gets the message. entry.messaging is an array, but
                     // will only ever contain one message, so we get index 0
                     let webhook_event = entry.messaging[0];
-                    webhook_event.message.text
-                    client.message('what is the weather in London?', {})
-                        .then((data) => {
-                            console.log('Yay, got Wit.ai response: ' + JSON.stringify(data));
-                            if(data.intents.name === 'introduction' && data.intents.confidence > .50){
-                                res.status(200).json('Beep Boop *robot noises*')
-                            } else{
-                                res.status(200).json('Yes')
-                            }
-                        })
-                        .catch(err=>{
-                            res.status(200).json('There seems to be an error. Please Wait.')
-                            console.dir(err)
-                        });
                     console.log(webhook_event);
+
+                    // Get the sender PSID
+                    let sender_psid = webhook_event.sender.id;
+                    console.log('Sender PSID: ' + sender_psid);
+
+                    // Check if the event is a message or postback and
+                    // pass the event to the appropriate handler function
+                    if (webhook_event.message) {
+                        functions.handleMessage(sender_psid, webhook_event.message);
+                    } else
+                        if (webhook_event.postback) {
+                        functions.handlePostback(sender_psid, webhook_event.postback);
+                    }
+
                 });
             } else {
                 // Returns a '404 Not Found' if event is not from a page subscription

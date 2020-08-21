@@ -14,8 +14,8 @@ const handles ={
             client.message(message.text, {})
                 .then((data) => {
                     console.log('Yay, got Wit.ai response: ' + JSON.stringify(data));
-                    if(data.intents[0].name & data.intents[0].name === 'introduction' && data.intents[0].confidence >= .50){
-                        if(data.traits.robotic[0].value & data.traits.robotic[0].value === 'yes' && data.traits.robotic[0].confidence >= .50){
+                    if(data.intents[0] & data.intents[0].name === 'introduction' && data.intents[0].confidence >= .50){
+                        if(data.traits.robotic[0] & data.traits.robotic[0].value === 'yes' && data.traits.robotic[0].confidence >= .50){
                             res = {
                                 "text": `Beep Boop *robot noises*`
                             }

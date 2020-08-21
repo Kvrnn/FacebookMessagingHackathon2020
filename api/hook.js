@@ -22,16 +22,17 @@ router.route('/').all(async(req, res) => {
                     let sender_psid = webhook_event.sender.id;
                     console.log('Sender PSID: ' + sender_psid);
 
-                    // // Check if the event is a message or postback and
-                    // // pass the event to the appropriate handler function
-                    // if (webhook_event.message) {
-                    //     functions.handleMessage(sender_psid, webhook_event.message);
-                    // } else
-                    //     if (webhook_event.postback) {
-                    //     functions.handlePostback(sender_psid, webhook_event.postback);
-                    // }
+                    // Check if the event is a message or postback and
+                    // pass the event to the appropriate handler function
+                    if (webhook_event.message) {
+                        functions.handleMessage(sender_psid, webhook_event.message);
+                    } else
+                        if (webhook_event.postback) {
+                        functions.handlePostback(sender_psid, webhook_event.postback);
+                    }
 
                 });
+                res.status(200).json('EVENT RECEIVED')
             } else {
                 // Returns a '404 Not Found' if event is not from a page subscription
                 res.sendStatus(404);

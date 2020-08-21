@@ -14,20 +14,21 @@ const handles ={
             client.message(message.text, {})
                 .then((data) => {
                     console.log('Yay, got Wit.ai response: ' + JSON.stringify(data));
-                    if(data.intents[0].name === 'introduction' && data.intents[0].confidence >= .50){
-                        if(data.traits.robotic[0].value === 'yes' && data.traits.robotic[0].confidence >= .50){
+                    if(data.intents[0].name & data.intents[0].name === 'introduction' && data.intents[0].confidence >= .50){
+                        if(data.traits.robotic[0].value & data.traits.robotic[0].value === 'yes' && data.traits.robotic[0].confidence >= .50){
                             res = {
                                 "text": `Beep Boop *robot noises*`
                             }
                             callSendAPI(sender_psid,res)
+                        } else{
+                            res = {
+                                "text": `Hello. :)`
+                            }
+                            callSendAPI(sender_psid,res)
                         }
-                        res = {
-                            "text": `Hello. :)`
-                        }
-                        callSendAPI(sender_psid,res)
                     } else{
                         res = {
-                            "text": `Yes`
+                            "text": `Hello there.`
                         }
                         callSendAPI(sender_psid,res)
                     }
